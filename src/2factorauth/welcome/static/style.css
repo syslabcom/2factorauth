@@ -1,0 +1,21 @@
+body {
+    font-family: "Helvetica","Arial",sans-serif;
+    font-size: 16px;
+}
+h1 {
+    color: #777;
+}
+ol, ul {
+    list-style: none;
+}
+a {
+    color: #37506E;
+    text-decoration: none;
+}
+a:hover {
+    color: #973D06;
+}
+#header {
+    background: #fff url(logo.png) no-repeat;
+    padding: 10 10 10 100;
+}

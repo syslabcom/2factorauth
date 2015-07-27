@@ -1,0 +1,12 @@
+2factorauth
+
+:doctest:
+:functional-zcml-layer: ../tests/ftesting.zcml
+
+Open browser and test::
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+  >>> browser.open('http://localhost/@@index')
+  >>> 'Welcome to BlueBream' in browser.contents
+  True

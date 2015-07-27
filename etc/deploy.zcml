@@ -1,0 +1,24 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <!-- This file is used for deployment (paster serve deploy.ini) -->
+
+  <include package="2factorauth" />
+
+  <principal
+     zcml:condition="have devmode"
+     id="zope.manager"
+     title="Manager"
+     login="admin"
+     password="admin"
+     password_manager="Plain Text"
+     />
+
+  <grant
+     zcml:condition="have devmode"
+     role="zope.Manager"
+     principal="zope.manager"
+     />
+
+
+</configure>
