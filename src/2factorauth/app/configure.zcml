@@ -1,0 +1,55 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="2factorauth">
+
+  <interface
+     interface=".interfaces.ITwoFactorApplication"
+     type="zope.app.content.interfaces.IContentType"
+     />
+
+  <class class=".app.TwoFactorApplication">
+    <implements
+       interface="zope.annotation.interfaces.IAttributeAnnotatable"
+       />
+    <implements
+       interface="zope.container.interfaces.IContentContainer" 
+       />
+    <require
+       permission="zope.ManageContent"
+       interface=".interfaces.ITwoFactorApplication"
+       set_schema=".interfaces.ITwoFactorApplication"
+       />
+  </class>
+
+  <browser:page
+     for="zope.site.interfaces.IRootFolder"
+     name="add_twofactor_app"
+     permission="zope.ManageContent"
+     class=".views.AddTwoFactorApplication"
+     />
+
+  <browser:page
+     for=".interfaces.ITwoFactorApplication"
+     name="index"
+     permission="zope.ManageContent"
+     class=".views.TwoFactorApplicationDefaultView"
+     />
+
+  <utility
+      name="TwoFactor Session Credentials"
+      provides="zope.app.authentication.interfaces.ICredentialsPlugin"
+      factory=".auth.TwoFactorSessionCredentialsPlugin"
+     />
+
+
+  <class class=".auth.TwoFactorSessionCredentialsPlugin">
+
+    <require
+        permission="zope.ManageServices"
+        interface="zope.app.authentication.session.IBrowserFormChallenger"
+        set_schema="zope.app.authentication.session.IBrowserFormChallenger" />
+
+  </class>
+
+</configure>

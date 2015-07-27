@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>2FactorAuth Demo</title>
+    <link rel="stylesheet" type="text/css" href="++resource++static/style.css" />
+  </head>
+  <body>
+    <h1 id="header">2Factor Auth Demo</h1>
+    <ul>
+      <li><a href="@@login.html" title="Login page">Login</a></li>
+      <li><a href="@@add_twofactor_app">Add a 2factor demo folder</a></li>
+    </ul>
+  </body>
+</html>

@@ -12,21 +12,31 @@
   <!-- Security Policy -->
   <include package="2factorauth" file="securitypolicy.zcml" />
 
-  <!-- The following registration (defaultView) register 'index' as
-       the default view for a container.  The name of default view
-       can be changed to a different value, for example, 'index.html'.
-       More details about defaultView registration is available here:
-       http://bluebream.zope.org/doc/1.0/howto/defaultview.html
-       -->
+  <browser:resourceDirectory
+     name="static"
+     directory="static"
+     />
+
+  <browser:page
+     for="zope.site.interfaces.IRootFolder"
+     name="index"
+     permission="zope.Public"
+     class=".rootdefaultview.RootDefaultView"
+     />
 
   <browser:defaultView
      for="zope.container.interfaces.IContainer"
      name="index"
      />
 
-  <!-- To remove the sample application delete the following line
-       and remove the `welcome` folder from this directory.
-       -->
-  <include package=".welcome" />
+  <adapter factory="zope.app.security.LogoutSupported" />
+
+  <include package=".app" />
+
+  <browser:page
+      name="loginForm.html" for="2factorauth.app.interfaces.ITwoFactorApplication"
+      template="templates/login_form.pt"
+      permission="zope.Public"
+      />
 
 </configure>
