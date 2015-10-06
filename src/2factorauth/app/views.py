@@ -1,3 +1,4 @@
+from zope.browserpage import ViewPageTemplateFile
 from zope.container.interfaces import INameChooser
 from zope.formlib import form
 
@@ -34,6 +35,7 @@ class AddTwoFactorApplication(form.AddForm):
         pau = PluggableAuthentication(prefix='2f.pau.')
         notify(ObjectCreatedEvent(pau))
         sm[u'authentication'] = pau
+        context['PluggableAuthentication'] = pau
         sm.registerUtility(pau, IAuthentication)
 
         annotation_utility = PrincipalAnnotationUtility()
@@ -46,19 +48,19 @@ class AddTwoFactorApplication(form.AddForm):
         sm[u'CookieClientIdManager'] = client_id_manager
         sm.registerUtility(client_id_manager, ICookieClientIdManager)
 
-        principals = PrincipalFolder(prefix='pf.')
+        principals = PrincipalFolder(prefix='users')
         notify(ObjectCreatedEvent(principals))
-        pau[u'pf'] = principals
-        pau.authenticatorPlugins += (u"pf", )
+        pau[u'users'] = principals
+        pau.authenticatorPlugins += (u"users", )
         notify(ObjectModifiedEvent(pau))
         pau.credentialsPlugins = (u'TwoFactor Session Credentials',)
 
-        p1 = InternalPrincipal('admin1', 'admin1', "Admin 1",
-                               passwordManagerName="Plain Text")
-        principals['p1'] = p1
+        admin1 = InternalPrincipal('admin1', 'admin1', "Admin 1",
+                                   passwordManagerName="Plain Text")
+        principals['admin1'] = admin1
 
         role_manager = IPrincipalRoleManager(context)
-        login_name = principals.getIdByLogin(p1.login)
+        login_name = principals.getIdByLogin(admin1.login)
         pid = unicode('2f.pau.' + login_name)
         role_manager.assignRoleToPrincipal('zope.Manager', pid)
 
@@ -77,5 +79,7 @@ class AddTwoFactorApplication(form.AddForm):
 
 class TwoFactorApplicationDefaultView(form.DisplayForm):
 
+    index = ViewPageTemplateFile('app.pt')
+
     def __call__(self):
-        return """Welcome to the TwoFactor application"""
+        return self.index()

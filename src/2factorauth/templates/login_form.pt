@@ -19,14 +19,17 @@
 
 
   <div metal:fill-slot="body" tal:define="principal python:request.principal.id">
-    <h1>2 Factor Auth Login Form</h1>
-<span tal:replace="principal"/>
+
+    <h1>2 Factor Auth Login Form - Credentials</h1>
+
+    <p style="color: #333; background: #ffff88;; padding: 20px; margin-right: 50px; box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);" tal:condition="request/e | nothing" tal:content="request/e" class="message warning" />
+
     <p i18n:translate="" tal:condition="python: principal == 'zope.anybody'">
       Please provide Login Information</p>
     <p i18n:translate="" tal:condition="python: principal != 'zope.anybody'">
       You are not authorized to perform this action. However, you may login as a
       different user who is authorized.</p>
-    <form action="." method="post"
+    <form action="@@loginForm.html" method="post"
           tal:attributes="action request/URL">
         <div tal:omit-tag=""
              tal:condition="python:principal != 'zope.anybody' and 'SUBMIT' in request">
@@ -49,13 +52,12 @@
 
         <div class="row">
             <input class="form-element" type="submit"
-                   name="SUBMIT" value="Log in" i18n:attributes="value login-button" />
+                   name="SUBMIT" value="Request TAN" i18n:attributes="value login-button" />
         </div>
         <input type="hidden" name="camefrom"
                tal:attributes="value python:request.get('camefrom', request.get('HTTP_REFERER', ''))">
     </form>
 
-    <span tal:replace="structure request/form"/>
   </div>
 
 </body>

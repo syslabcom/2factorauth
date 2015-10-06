@@ -15,10 +15,12 @@ setup(name='2factorauth',
       license='GPL2.0',
       package_dir={'': 'src'},
       packages=find_packages('src'),
-      
+
       include_package_data=True,
       zip_safe=False,
-      install_requires=['setuptools',
+      install_requires=['netifaces',
+                        'recaptcha-client',
+                        'setuptools',
                         'zope.securitypolicy',
                         'zope.component',
                         'zope.annotation',
@@ -56,8 +58,10 @@ setup(name='2factorauth',
                         'zope.intid',
                         'zope.contentprovider',
                         'zope.app.zcmlfiles',
+                        'zope.session',
+                        'zope.sendmail'
                         ],
-      entry_points = """
+      entry_points="""
       [paste.app_factory]
       main = 2factorauth.startup:application_factory
 

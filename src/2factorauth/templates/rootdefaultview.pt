@@ -9,5 +9,9 @@
       <li><a href="@@login.html" title="Login page">Login</a></li>
       <li><a href="@@add_twofactor_app">Add a 2factor demo folder</a></li>
     </ul>
+    <h2>Existing Folders</h2>
+    <ul>
+      <li tal:repeat="app python:context"><a href="#" tal:attributes="href string:${app}" tal:content="app"/></li>
+    </ul>
   </body>
 </html>

@@ -5,6 +5,10 @@
 
   <!-- default bluebream libraries -->
   <include file="bluebream.zcml" />
+ 
+  <include package="zope.app.zcmlfiles" />
+  <include package="zope.session" />
+  <include file="mail.zcml" />
 
   <!-- Override registrations -->
   <includeOverrides package="2factorauth" file="overrides.zcml" />
@@ -21,7 +25,7 @@
      for="zope.site.interfaces.IRootFolder"
      name="index"
      permission="zope.Public"
-     class=".rootdefaultview.RootDefaultView"
+     class=".views.RootDefaultView"
      />
 
   <browser:defaultView
@@ -37,6 +41,14 @@
       name="loginForm.html" for="2factorauth.app.interfaces.ITwoFactorApplication"
       template="templates/login_form.pt"
       permission="zope.Public"
+      class=".views.LoginFormView"
+      />
+
+  <browser:page
+      name="tanForm.html" for="2factorauth.app.interfaces.ITwoFactorApplication"
+      template="templates/tan_form.pt"
+      permission="zope.Public"
+      class=".views.TanFormView"
       />
 
 </configure>

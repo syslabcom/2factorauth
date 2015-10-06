@@ -1,0 +1,75 @@
+<html metal:use-macro="context/@@standard_macros/page"
+      i18n:domain="zope">
+<head>
+  <title metal:fill-slot="title" i18n:translate="">
+    Sign in
+  </title>
+</head>
+<body>
+
+  <metal:slot fill-slot="logo"><img
+        tal:attributes="src context/++resource++zope3logo.gif" />
+  </metal:slot>
+
+  <metal:ignore fill-slot="navigators" />
+
+  <metal:empty fill-slot="breadcrumbs">
+    <br />
+  </metal:empty>
+
+
+  <div metal:fill-slot="body" tal:define="principal python:request.principal.id">
+
+    <h1>2 Factor Auth Login Form - TANs</h1>
+
+    <p style="color: #333; background: #ffff88;; padding: 20px; margin-right: 50px; box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);" tal:condition="request/e | nothing" tal:content="request/e" class="message warning" />
+
+    <p i18n:translate="" tal:condition="python: principal != 'zope.anybody'">
+      You are not authorized to perform this action. However, you may login as a
+      different user who is authorized.</p>
+
+    <p i18n:translate="" tal:condition="python: principal == 'zope.anybody' and not (request.get('a') and request.get('b'))">
+      You are not authorized to perform this action.</p>
+
+
+    <tal:c condition="python: principal == 'zope.anybody' and request.get('a') and request.get('b')">
+
+      <p i18n:translate="">
+        You have received an E-mail with a TAN. Please enter digits <strong tal:content="request/a">A</strong> and <strong tal:content="request/b">B</strong> below.</p>
+
+      
+      <form action="." method="post"
+            tal:attributes="action request/URL">
+          <div class="row">
+              <div class="label" i18n:translate="">Tan Field 1</div>
+              <div class="field">
+                  <input type="text" name="tan_a" size="2" maxlength="1" tal:attributes="value request/tan_a | string:"/>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="label" i18n:translate="">Tan Field 2</div>
+              <div class="field">
+                  <input type="text" name="tan_b" size="2" maxlength="1" tal:attributes="value request/tan_b | string:"/>
+              </div>
+          </div>
+          <input type="hidden" name="hash" tal:attributes="value request/h | nothing" />
+          <input type="hidden" name="camefrom"
+                 tal:attributes="value python:request.get('camefrom', '')">
+
+          <div id="captcha" tal:content="structure view/displayhtml"/>
+
+          <div class="row">
+              <input class="form-element" type="submit"
+                     name="SUBMIT" value="Log in" i18n:attributes="value login-button" />
+          </div>
+
+      </form>
+
+    </tal:c>
+
+  </div>
+
+</body>
+</html>
+
