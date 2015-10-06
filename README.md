@@ -56,6 +56,7 @@ Werden alle drei Felder korrekt ausgefüllt, ist der Benutzer eingeloggt.
 
 ## Noch zu tun
 
+* Übersetzungen einbauen
 * Automatische Sperre bei Falscheingaben (in Steg)
 * Passwort Regel implementieren (in Steg)
 
